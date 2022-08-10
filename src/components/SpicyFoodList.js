@@ -6,11 +6,26 @@ function SpicyFoodList() {
 
   function handleAddFood() {
     const newFood = getNewRandomSpicyFood();
-    console.log(newFood);
+    const newFoodArray = [...foods, newFood];
+    setFoods(newFoodArray);
+  }
+
+  function handleLiClick(id) {
+    const newFoodArray = foods.map((food) => {
+      if (food.id === id) {
+        return {
+          ...food, 
+          heatLevel: food.heatLevel + 1,
+        };
+      } else {
+        return food;
+        }
+      });
+    setFoods(newFoodArray);
   }
 
   const foodList = foods.map((food) => (
-    <li key={food.id}>
+    <li key={food.id} onClick={() => handleLiClick(food.id)}>
       {food.name} | Heat: {food.heatLevel} | Cuisine: {food.cuisine}
     </li>
   ));
@@ -21,6 +36,10 @@ function SpicyFoodList() {
       <ul>{foodList}</ul>
     </div>
   );
+
+  
 }
+
+
 
 export default SpicyFoodList;
